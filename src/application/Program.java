@@ -35,6 +35,7 @@ public class Program {
             System.out.println("================================================ ");
             System.out.print("Enter your choice:  ");
             option = sc.nextInt();
+            sc.nextLine();
             System.out.println("================================================ ");
 
             switch (option) {
