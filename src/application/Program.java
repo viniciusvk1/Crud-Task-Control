@@ -51,7 +51,7 @@ public class Program {
                     break;
 
                 case 4:
-
+                    listTasks();
                     break;
 
                 case 5:
@@ -68,8 +68,6 @@ public class Program {
             }
 
         } while (option != 0);
-
-
         sc.close();
     }
 
@@ -77,7 +75,6 @@ public class Program {
         System.out.println("Registering a new employee!");
         System.out.println("================================================ ");
         System.out.print("Enter the employee's name: ");
-        sc.nextLine();
         String employeeName = sc.nextLine();
         System.out.print("Enter the employee's position: ");
         String employeePosition = sc.nextLine();
@@ -98,7 +95,6 @@ public class Program {
         System.out.println("Creating a new task!");
         System.out.println("================================================ ");
         System.out.print("Enter the name of the task you want to create: ");
-        sc.nextLine();
         String taskName = sc.nextLine();
         System.out.print("Enter the task description: ");
         String taskDescription = sc.nextLine();
@@ -113,10 +109,10 @@ public class Program {
             }
         }
 
-        if(responsibleEmployee == null){
+        if (responsibleEmployee == null) {
             System.out.println("Employee not found. Do you want to register a new employee? (Y/N)");
             String answer = sc.nextLine();
-            if(answer.equalsIgnoreCase("y")){
+            if (answer.equalsIgnoreCase("y")) {
                 registerEmployee();
                 responsibleEmployee = employees.get(employees.size() - 1);
             } else {
@@ -133,6 +129,19 @@ public class Program {
 
         System.out.println("Task created succesfully!");
 
+
+    }
+
+    public static void listTasks() {
+        System.out.println("All the tasks:");
+        System.out.println("================================================ ");
+        for (Tasks tasks : tasks) {
+            System.out.println("Task name: " + tasks.getTaskName()
+                    + " - responsable employee: " + tasks.getEmployeeTask().getEmployeeName()
+                    + " - description: " + tasks.getTaskDescription()
+                    + " - deadline: " + tasks.getDeadline()
+            );
+        }
 
     }
 
