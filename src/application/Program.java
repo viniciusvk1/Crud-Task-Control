@@ -3,6 +3,7 @@ package application;
 import models.Employee;
 import models.Tasks;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
@@ -46,7 +47,7 @@ public class Program {
                     break;
 
                 case 3:
-
+                    createTask();
                     break;
 
                 case 4:
@@ -93,5 +94,46 @@ public class Program {
         }
     }
 
+    public static void createTask() {
+        System.out.println("Creating a new task!");
+        System.out.println("================================================ ");
+        System.out.print("Enter the name of the task you want to create: ");
+        sc.nextLine();
+        String taskName = sc.nextLine();
+        System.out.print("Enter the task description: ");
+        String taskDescription = sc.nextLine();
+        System.out.print("Employee responsible for the task: ");
+        String employeeTask = sc.nextLine();
+
+        Employee responsibleEmployee = null;
+        for (Employee emp : employees) {
+            if (emp.getEmployeeName().equals(employeeTask)) {
+                responsibleEmployee = emp;
+                break;
+            }
+        }
+
+        if(responsibleEmployee == null){
+            System.out.println("Employee not found. Do you want to register a new employee? (Y/N)");
+            String answer = sc.nextLine();
+            if(answer.equalsIgnoreCase("y")){
+                registerEmployee();
+                responsibleEmployee = employees.get(employees.size() - 1);
+            } else {
+                System.out.println("Task creation canceled!");
+                return;
+            }
+        }
+
+        System.out.println("Enter the deadline for task completion (in the format yyyy--MM-dd): ");
+        LocalDate deadline = LocalDate.parse(sc.nextLine());
+
+        Tasks newTask = new Tasks(taskName, responsibleEmployee, taskDescription, deadline);
+        tasks.add(newTask);
+
+        System.out.println("Task created succesfully!");
+
+
+    }
 
 }
