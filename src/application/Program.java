@@ -56,11 +56,20 @@ public class Program {
                     break;
 
                 case 5:
-
+                    updateTask();
                     break;
 
                 case 6:
+                    deleteTask();
+                    break;
 
+                case 0:
+                    System.out.println("""
+                                                       
+                            Closing the program!
+                            Thanks for using and testing...
+                            """);
+                    System.out.println("================================================ ");
                     break;
 
                 default:
@@ -129,8 +138,6 @@ public class Program {
         tasks.add(newTask);
 
         System.out.println("Task created succesfully!");
-
-
     }
 
     public static void listTasks() {
@@ -143,7 +150,95 @@ public class Program {
                     + " - deadline: " + tasks.getDeadline()
             );
         }
+    }
+
+    public static void updateTask() {
+        System.out.println("Updating an existing task!");
+        System.out.println("================================================ ");
+        System.out.println("Enter the name of the task you want to change: ");
+        String taskUpdateName = sc.nextLine();
+
+        Tasks taskSearch = null;
+
+        for (Tasks tasks1 : tasks) {
+            if (tasks1.getTaskName().equals(taskUpdateName)) {
+                taskSearch = tasks1;
+                break;
+            }
+        }
+
+        if (taskSearch == null) {
+            System.out.println("Task not found! Please try again.");
+            System.out.println("================================================ ");
+            return;
+        }
+
+        System.out.println("================================================ ");
+        System.out.println("Task found!");
+        System.out.println("Do you want to change the name of the task? (Y/N) ");
+        String answerNameTask = sc.nextLine();
+        if (answerNameTask.equalsIgnoreCase("y")) {
+            System.out.println("Type the new name for the task: ");
+            String newTaskName = sc.nextLine();
+            taskSearch.setTaskName(newTaskName);
+            System.out.println("Task name updated!");
+        }
+
+        System.out.println("Do you want to change the employee assigned to the task? (Y/N) ");
+        String answerEmployeeTask = sc.nextLine();
+        if (answerEmployeeTask.equalsIgnoreCase("y")) {
+            System.out.println("Enter the new employee assigned to this task: ");
+            String newEmployeeName = sc.nextLine();
+            Employee newEmployee = null;
+
+            for (Employee emp : employees) {
+                if (emp.getEmployeeName().equals(newEmployeeName)) {
+                    newEmployee = emp;
+                    break;
+                }
+            }
+
+            if (newEmployee == null) {
+                System.out.println("Employee not found. Do you want to register a new employee? (Y/N)");
+                String answer = sc.nextLine();
+                if (answer.equalsIgnoreCase("y")) {
+                    registerEmployee();
+                    newEmployee = employees.get(employees.size() - 1);
+                } else {
+                    System.out.println("Task update canceled!");
+                    return;
+                }
+            }
+
+            taskSearch.setEmployeeTask(newEmployee);
+            System.out.println("Employee assigned to the task updated!");
+        }
+
+        System.out.println("Do you want to change the task description? (Y/N) ");
+        String answerDescriptionTask = sc.nextLine();
+        if (answerDescriptionTask.equalsIgnoreCase("y")) {
+            System.out.println("Enter the new description: ");
+            String newTaskDescription = sc.nextLine();
+            taskSearch.setTaskDescription(newTaskDescription);
+            System.out.println("Task description updated!");
+        }
+
+        System.out.println("Do you want to change the task deadline? (Y/N)");
+        String answerDeadline = sc.nextLine();
+        if (answerDeadline.equalsIgnoreCase("y")) {
+            System.out.println("Enter the new deadline (in the format yyyy-MM-dd): ");
+            LocalDate newDeadline = LocalDate.parse(sc.nextLine());
+            taskSearch.setDeadline(newDeadline);
+            System.out.println("Task updated successfully!");
+        }
+
+        System.out.println("Task updated successfully!");
 
     }
+
+    public static void deleteTask() {
+
+    }
+
 
 }
