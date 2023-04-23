@@ -233,12 +233,37 @@ public class Program {
         }
 
         System.out.println("Task updated successfully!");
-
     }
 
     public static void deleteTask() {
+        System.out.println("Deleting existing tasks: ");
+        System.out.println("================================================ ");
+        System.out.println("Enter the name of the task you want to delete: ");
+        String answerDeleteTask = sc.nextLine();
+
+        Tasks searchTask = null;
+        for (Tasks task2 : tasks) {
+            if (task2.getTaskName().equalsIgnoreCase(answerDeleteTask)) {
+                searchTask = task2;
+            }
+        }
+
+        if (searchTask == null) {
+            System.out.println("Task not found! Please try again.");
+            return;
+        } else {
+            System.out.println("Task found! Do you really want to delete? (Y/N) ");
+            String answerDelete = sc.nextLine();
+            if (answerDelete.equalsIgnoreCase("y")) {
+                System.out.println("Deleting the task!");
+                tasks.remove(searchTask);
+                System.out.println("Successful deletion!");
+            } else {
+                System.out.println("He didn't delete anything! Back to the menu.");
+                return;
+            }
+        }
 
     }
-
 
 }
